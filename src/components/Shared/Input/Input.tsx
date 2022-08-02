@@ -4,9 +4,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string
   placeholder?: string
   className?: React.HTMLAttributes<HTMLInputElement>["className"]
-
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  value?: string
+  value: string
   firstIcon?: React.ReactNode
   secondIcon?: React.ReactNode
 }

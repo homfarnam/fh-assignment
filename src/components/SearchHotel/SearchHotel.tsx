@@ -1,9 +1,10 @@
+import { useContext, useState } from "react"
+import DatePicker from "react-datepicker"
+import { v4 as uuidv4 } from "uuid"
 import Input from "components/Shared/Input/Input"
-import { useContext, useEffect, useState } from "react"
 import { ReactComponent as Location } from "../../assets/location.svg"
 import { ReactComponent as Where } from "../../assets/where.svg"
 import { ReactComponent as Guests } from "../../assets/people-numbers.svg"
-import DatePicker from "react-datepicker"
 import {
   DatePickers,
   Form,
@@ -13,7 +14,7 @@ import {
 } from "./SearchHotel.styles"
 import GuestPicker from "components/GuestPicker/GuestPicker"
 import { HotelContext } from "context/Provider"
-import { v4 as uuidv4 } from "uuid"
+import { Button } from "components"
 
 const SearchHotel = () => {
   const [searchCity, setSearchCity] = useState<string>("")
@@ -36,7 +37,7 @@ const SearchHotel = () => {
   }
 
   return (
-    <Form className="">
+    <Form>
       <div className="w-full relative flex items-center">
         <Input
           type="text"
@@ -86,9 +87,14 @@ const SearchHotel = () => {
         </div>
       </div>
       <div className="w-full mt-3">
-        <button className={SearchButton} onClick={handleOpenPicker}>
+        <Button
+          type="button"
+          variant="primary"
+          className={SearchButton}
+          onClick={handleOpenPicker}
+        >
           Search
-        </button>
+        </Button>
       </div>
       {openPicker && <GuestPicker handleOpen={handleOpenPicker} />}
     </Form>

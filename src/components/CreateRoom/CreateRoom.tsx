@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import type { CalcType, Child, Room } from "types/types"
 import { HotelContext } from "context/Provider"
 import { Button, AgePicker, AdultChange, ChildrenChange } from "components"
+import { checkRoomSize } from "lib/lib"
 
 interface CreateRoomProps {
   data: Room
@@ -21,7 +22,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     updateAdults,
     updateChildren,
     rooms,
-    createRooms,
+    createOneRoom,
     deleteRoom,
     deleteChildren,
   } = useContext(HotelContext)
@@ -37,10 +38,14 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     console.log({ rooms, adultsInRoom })
   }, [adultsInRoom, rooms])
 
-  const checkRoomSize = (room: Room): number => {
-    return room.adults + (room.children?.length ?? 0)
-  }
-
+  /**
+   *
+   * @param type - "Plus" | "Minus"
+   *
+   * @description
+   * This function is used to update the number of adults in a room.
+   *
+   */
   const handleAdultCalculate = (type: CalcType) => {
     let condition
 
@@ -56,6 +61,12 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     updateAdults(data, condition)
   }
 
+  /**
+   *
+   * @param type - "Plus" | "Minus"
+   * @returns
+   * This function is used to create a child in a room.
+   */
   const handleChildrenCalculate = (type: CalcType) => {
     let condition
     if (type === "Plus") {
@@ -71,21 +82,26 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     createChildren(data, condition)
   }
 
+  /**
+   *
+   * @param age - number
+   * @param data - Child
+   *
+   * @description
+   * This function is used to update the age of a child in a room.
+   */
   const handleAgeChange = (age: number, data: Child) => {
     updateChildren(data, age)
   }
 
   // function to create new room with default values
-  const createRoom = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (rooms.length <= 7) {
-      createRooms({
-        id: uuidv4(),
-        adults: 1,
-        children: [],
-      })
-    }
-  }
 
+  /**
+   *
+   * @param id - string
+   * @description
+   * This function is used to delete a child in a room.
+   */
   const handleDeleteChild = (id: string) => {
     deleteChildren(id)
     setChildrenInRoom((prev) => prev - 1)
@@ -132,7 +148,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
       <Button
         type="button"
         variant="primary"
-        onClick={createRoom}
+        onClick={() => createOneRoom()}
         className="text-[#0071F3] bg-[#F7FBFF] w-full py-3 mt-3 border-[#DAE9FA] border rounded-lg"
       >
         <strong className="text-xl">+ </strong>

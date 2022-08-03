@@ -1,19 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import type { Child, Room } from "types/types"
-import { ReactComponent as Plus } from "../../assets/plus.svg"
-import { ReactComponent as Minus } from "../../assets/minus.svg"
+import { v4 as uuidv4 } from "uuid"
+import type { CalcType, Child, Room } from "types/types"
 import { HotelContext } from "context/Provider"
 import { Button, AgePicker, AdultChange, ChildrenChange } from "components"
-import { css } from "@emotion/css"
-import { v4 as uuidv4 } from "uuid"
-import { inputStyles } from "styles/main.styles"
 
 interface CreateRoomProps {
   data: Room
   currentRoom: number
 }
-
-// { data, currentRoom }: CreateRoomProps
 
 const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
   const [adultsInRoom, setAdultsInRoom] = useState<number>(data.adults)
@@ -43,13 +37,19 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     console.log({ rooms, adultsInRoom })
   }, [adultsInRoom, rooms])
 
-  const handleAdultCalculate = (type: "Plus" | "Minus") => {
+  const checkRoomSize = (room: Room): number => {
+    return room.adults + (room.children?.length ?? 0)
+  }
+
+  const handleAdultCalculate = (type: CalcType) => {
     let condition
 
     if (type === "Plus") {
+      if (checkRoomSize(data) === 5) {
+        return
+      }
       condition = adultsInRoom === 5 ? adultsInRoom : adultsInRoom + 1
       setAdultsInRoom(condition)
-
       updateAdults(data, condition)
     } else {
       condition = adultsInRoom === 1 ? adultsInRoom : adultsInRoom - 1
@@ -59,9 +59,12 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     }
   }
 
-  const handleChildrenCalculate = (type: "Plus" | "Minus") => {
+  const handleChildrenCalculate = (type: CalcType) => {
     let condition
     if (type === "Plus") {
+      if (checkRoomSize(data) === 5) {
+        return
+      }
       condition = childrenInRoom === 3 ? childrenInRoom : childrenInRoom + 1
     } else {
       condition = childrenInRoom === 0 ? childrenInRoom : childrenInRoom - 1

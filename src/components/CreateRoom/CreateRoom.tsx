@@ -6,6 +6,7 @@ import { HotelContext } from "context/Provider"
 import { Button } from "components"
 import { css } from "@emotion/css"
 import ChildAge from "components/ChildAge/ChildAge"
+import { v4 as uuidv4 } from "uuid"
 
 interface CreateRoomProps {
   data: Room
@@ -29,7 +30,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     data.children?.length ?? 0
   )
 
-  const { createChildren, updateAdults, rooms, updateChildren } =
+  const { createChildren, updateAdults, rooms, createRooms } =
     useContext(HotelContext)
 
   const handleAdults = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +78,17 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
 
   const handleAgeChange = (age: number, data: Child) => {
     console.log("age change", { data, age })
+  }
+
+  // function to create new room with default values
+  const createRoom = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (rooms.length <= 7) {
+      createRooms({
+        id: uuidv4(),
+        adults: 1,
+        children: [],
+      })
+    }
   }
 
   return (
@@ -147,6 +159,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
       <Button
         type="button"
         variant="primary"
+        onClick={createRoom}
         className="text-[#0071F3] bg-[#F7FBFF] w-full py-3 mt-3 border-[#DAE9FA] border rounded-lg"
       >
         <strong className="text-xl">+ </strong>

@@ -4,7 +4,7 @@ import GuestPicker from "./GuestPicker/GuestPicker"
 import CreateRoom from "./CreateRoom/CreateRoom"
 import Button from "./Shared/Button/Button"
 import ButtonSpinner from "./Shared/ButtonSpinner/ButtonSpinner"
-import ChildAge from "./ChildAge/ChildAge"
+import AgePicker from "./AgePicker/AgePicker"
 
 export {
   SearchHotel,
@@ -13,5 +13,5 @@ export {
   CreateRoom,
   Button,
   ButtonSpinner,
-  ChildAge,
+  AgePicker,
 }

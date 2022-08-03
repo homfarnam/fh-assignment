@@ -14,4 +14,8 @@ const calcChildren = (rooms: Room[]): number =>
 const calcTotal = (rooms: Room[]): number =>
   calcAdults(rooms) + calcChildren(rooms)
 
-export { calcAdults, calcChildren, calcTotal }
+const checkRoomSize = (room: Room): number => {
+  return room.adults + (room.children?.length ?? 0)
+}
+
+export { calcAdults, calcChildren, calcTotal, checkRoomSize }

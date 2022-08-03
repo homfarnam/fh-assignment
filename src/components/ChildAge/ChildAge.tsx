@@ -4,10 +4,16 @@ import { Child } from "types/types"
 interface ChildAgeProps {
   index: number
   onAgeChange: (age: number, data: Child) => void
+  onDelete: (id: string) => void
   data: Child
 }
 
-const ChildAge: React.FC<ChildAgeProps> = ({ index, onAgeChange, data }) => {
+const ChildAge: React.FC<ChildAgeProps> = ({
+  index,
+  onAgeChange,
+  onDelete,
+  data,
+}) => {
   const [age, setAge] = useState<number>(0)
 
   const handleChangeAge = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,6 +38,7 @@ const ChildAge: React.FC<ChildAgeProps> = ({ index, onAgeChange, data }) => {
           <option value="10">10</option>
           <option value="11">11</option>
         </select>
+        <button onClick={() => onDelete(data.id)}>X</button>
       </div>
     </div>
   )

@@ -15,9 +15,11 @@ const App = () => {
     //  get url and decode rooms parameter
     const url = window.location.href
     const urlParams = new URL(url)
-    const rooms = urlParams.searchParams.get("rooms") as string
 
-    setBrowserUrl(decodeURIComponent(rooms))
+    const rooms = urlParams.searchParams.get("rooms") as string
+    if (rooms) {
+      setBrowserUrl(decodeURIComponent(rooms))
+    }
   }, [setBrowserUrl])
 
   // create function to decode rooms parameter and create rooms with Room structure and children with Child structure
@@ -43,14 +45,15 @@ const App = () => {
         children: childrenDecoded,
       }
     })
-    console.log({ roomsDecoded })
     return roomsDecoded
   }
 
   useEffect(() => {
-    console.log({ browserUrl })
-    const allRooms = decodeRooms(browserUrl)
-    setRooms(allRooms as Room[])
+    if (browserUrl !== "") {
+      const allRooms = decodeRooms(browserUrl)
+
+      setRooms(allRooms as Room[])
+    }
   }, [setRooms, browserUrl])
 
   return (

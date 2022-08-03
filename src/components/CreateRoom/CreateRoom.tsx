@@ -49,14 +49,11 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
         return
       }
       condition = adultsInRoom === 5 ? adultsInRoom : adultsInRoom + 1
-      setAdultsInRoom(condition)
-      updateAdults(data, condition)
     } else {
       condition = adultsInRoom === 1 ? adultsInRoom : adultsInRoom - 1
-
-      setAdultsInRoom(condition)
-      updateAdults(data, condition)
     }
+    setAdultsInRoom(condition)
+    updateAdults(data, condition)
   }
 
   const handleChildrenCalculate = (type: CalcType) => {

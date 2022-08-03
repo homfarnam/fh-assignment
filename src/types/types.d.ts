@@ -10,5 +10,6 @@ interface Room {
 }
 
 type CalcType = "Plus" | "Minus"
+type CloseButtonType = "Open" | "Close"
 
-export { Child, Room, CalcType }
+export { Child, Room, CalcType, CloseButtonType }

@@ -3,22 +3,15 @@ import type { Child, Room } from "types/types"
 import { ReactComponent as Plus } from "../../assets/plus.svg"
 import { ReactComponent as Minus } from "../../assets/minus.svg"
 import { HotelContext } from "context/Provider"
-import { Button, AgePicker } from "components"
+import { Button, AgePicker, AdultChange, ChildrenChange } from "components"
 import { css } from "@emotion/css"
 import { v4 as uuidv4 } from "uuid"
+import { inputStyles } from "styles/main.styles"
 
 interface CreateRoomProps {
   data: Room
   currentRoom: number
 }
-
-const inputStyles = css`
-  ::-webkit-outer-spin-button,
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`
 
 // { data, currentRoom }: CreateRoomProps
 
@@ -109,53 +102,17 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
           Remove Room
         </span>
       </div>
+      <AdultChange
+        adults={adultsInRoom}
+        onAddAdult={handleAdults}
+        onAdultCalculate={handleAdultCalculate}
+      />
+      <ChildrenChange
+        children={childrenInRoom}
+        onAddChildren={handleChildren}
+        onChildrenCalculate={handleChildrenCalculate}
+      />
 
-      <div className="mt-5 w-full flex items-center justify-between">
-        <label htmlFor="adults" className="font-medium">
-          Adults
-        </label>
-        <div className="flex items-center gap-2">
-          <Minus
-            className="cursor-pointer"
-            onClick={() => handleAdultCalculate("Minus")}
-          />
-          <input
-            type="number"
-            className={`border w-10 py-1 text-center ${inputStyles}`}
-            value={adultsInRoom}
-            onChange={handleAdults}
-            min={1}
-            max={5}
-          />
-          <Plus
-            className="cursor-pointer"
-            onClick={() => handleAdultCalculate("Plus")}
-          />
-        </div>
-      </div>
-      <div className="mt-2 w-full flex items-center justify-between">
-        <label htmlFor="children" className="font-medium">
-          Children
-        </label>
-        <div className="flex items-center gap-2">
-          <Minus
-            className="cursor-pointer"
-            onClick={() => handleChildrenCalculate("Minus")}
-          />
-          <input
-            type="number"
-            className={`border w-10 py-1 text-center ${inputStyles}`}
-            value={childrenInRoom}
-            onChange={handleChildren}
-            min={0}
-            max={3}
-          />
-          <Plus
-            className="cursor-pointer"
-            onClick={() => handleChildrenCalculate("Plus")}
-          />
-        </div>
-      </div>
       <div className="flex flex-col">
         {data.children &&
           data.children?.length > 0 &&

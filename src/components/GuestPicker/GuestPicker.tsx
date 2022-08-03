@@ -3,6 +3,8 @@ import { HotelContext } from "context/Provider"
 import { useContext } from "react"
 import { ReactComponent as Close } from "../../assets/close.svg"
 import CreateRoom from "components/CreateRoom/CreateRoom"
+import { Button } from "components"
+import { SearchButton } from "components/SearchHotel/SearchHotel.styles"
 
 const GuestPickerContainer = styled.div`
   width: 100%;
@@ -11,7 +13,8 @@ const GuestPickerContainer = styled.div`
   position: absolute;
   background-color: white;
   top: 0;
-
+  overflow: auto;
+  padding: 0.5rem;
   h3 {
     font-family: "Roboto", sans-serif;
     font-style: normal;
@@ -28,6 +31,16 @@ interface GuestPickerProps {
 const GuestPicker: React.FC<GuestPickerProps> = ({ handleOpen }) => {
   const { rooms } = useContext(HotelContext)
 
+  // sum of adults in all rooms
+  let adults = rooms.reduce((acc, curr) => {
+    return acc + curr.adults
+  }, 0)
+
+  // sum of children in all rooms
+  let children = rooms.reduce((acc, curr) => {
+    return curr?.children ? acc + +curr?.children?.length : 0
+  }, 0)
+
   return (
     <GuestPickerContainer>
       <div className="flex items-center justify-start w-full py-5 px-3">
@@ -42,7 +55,11 @@ const GuestPicker: React.FC<GuestPickerProps> = ({ handleOpen }) => {
           return <CreateRoom key={room.id} data={room} currentRoom={index} />
         })}
       </div>
-      <div></div>
+      <div>
+        <Button type="button" variant="primary" className={SearchButton}>
+          Search - {rooms.length} Rooms - {adults + children} Guests
+        </Button>
+      </div>
     </GuestPickerContainer>
   )
 }

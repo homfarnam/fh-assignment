@@ -16,6 +16,7 @@ interface HotelContextType {
   deleteAllData: () => void
   browserUrl: string
   setBrowserUrl: React.Dispatch<React.SetStateAction<string>>
+  createOneRoom: () => void
 }
 
 interface HotelContextProps {
@@ -36,6 +37,7 @@ const initialState: HotelContextType = {
   deleteAllData: () => {},
   browserUrl: "",
   setBrowserUrl: () => {},
+  createOneRoom: () => {},
 }
 
 export const HotelContext = createContext<HotelContextType>(initialState)
@@ -114,6 +116,16 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
     )
   }
 
+  const createOneRoom = () => {
+    if (rooms.length <= 7) {
+      createRooms({
+        id: uuidv4(),
+        adults: 1,
+        children: [],
+      })
+    }
+  }
+
   const deleteRoom = (id: string) => {
     setRooms((prev) => prev.filter((room) => room.id !== id))
   }
@@ -138,6 +150,7 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
         deleteChildren,
         deleteAllData,
         browserUrl,
+        createOneRoom,
         setBrowserUrl,
       }}
     >

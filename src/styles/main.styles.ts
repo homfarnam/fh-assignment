@@ -1,3 +1,4 @@
+import { css } from "@emotion/css"
 import styled from "@emotion/styled"
 
 const MainDiv = styled.div`
@@ -29,4 +30,12 @@ const MainDiv = styled.div`
   }
 `
 
-export { MainDiv }
+const inputStyles = css`
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`
+
+export { MainDiv, inputStyles }

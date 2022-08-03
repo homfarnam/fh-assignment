@@ -3,7 +3,7 @@ import type { Child, Room } from "types/types"
 import { ReactComponent as Plus } from "../../assets/plus.svg"
 import { ReactComponent as Minus } from "../../assets/minus.svg"
 import { HotelContext } from "context/Provider"
-import { Button, ChildAge } from "components"
+import { Button, AgePicker } from "components"
 import { css } from "@emotion/css"
 import { v4 as uuidv4 } from "uuid"
 
@@ -161,11 +161,11 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
           data.children?.length > 0 &&
           data.children.map((item, index) => {
             return (
-              <ChildAge
+              <AgePicker
                 key={item.id}
                 index={index}
                 onAgeChange={handleAgeChange}
-                data={item}
+                childData={item}
                 onDelete={handleDeleteChild}
               />
             )

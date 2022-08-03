@@ -149,7 +149,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
               <ChildAge
                 key={item.id}
                 index={index}
-                handleChange={handleAgeChange}
+                onAgeChange={handleAgeChange}
                 data={item}
               />
             )

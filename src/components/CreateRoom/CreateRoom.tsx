@@ -1,10 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from "react"
-import type { Room } from "types/types"
+import type { Child, Room } from "types/types"
 import { ReactComponent as Plus } from "../../assets/plus.svg"
 import { ReactComponent as Minus } from "../../assets/minus.svg"
 import { HotelContext } from "context/Provider"
 import { Button } from "components"
 import { css } from "@emotion/css"
+import ChildAge from "components/ChildAge/ChildAge"
 
 interface CreateRoomProps {
   data: Room
@@ -51,7 +52,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
 
       updateAdults(data, condition)
     } else {
-      condition = +adultsInRoom === 1 ? +adultsInRoom : +adultsInRoom - 1
+      condition = adultsInRoom === 1 ? adultsInRoom : adultsInRoom - 1
 
       setAdultsInRoom(condition)
       updateAdults(data, condition)
@@ -61,9 +62,9 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
   const handleChildrenCalculate = (type: "Plus" | "Minus") => {
     let condition
     if (type === "Plus") {
-      condition = +childrenInRoom === 3 ? +childrenInRoom : +childrenInRoom + 1
+      condition = childrenInRoom === 3 ? childrenInRoom : childrenInRoom + 1
     } else {
-      condition = +childrenInRoom === 0 ? +childrenInRoom : +childrenInRoom - 1
+      condition = childrenInRoom === 0 ? childrenInRoom : childrenInRoom - 1
     }
     setChildrenInRoom(condition)
 
@@ -73,6 +74,10 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
   // const handleChildrenCalculate = (type: "Plus" | "Minus") => {
   //   updateChildern(childrenInRoom, type)
   // }
+
+  const handleAgeChange = (age: number, data: Child) => {
+    console.log("age change", { data, age })
+  }
 
   return (
     <div className="p-3 text-black">
@@ -127,28 +132,16 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
       <div className="flex flex-col">
         {data.children &&
           data.children?.length > 0 &&
-          data.children.map((item, index) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between mx-5 my-2"
-            >
-              <label htmlFor={`child-${index}`}>Child {index + 1} age </label>
-              <div className="flex items-center gap-2">
-                <select
-                  name={`age-${index}`}
-                  id={`age-${index}`}
-                  className="border p-1"
-                  defaultValue="age"
-                >
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                </select>
-              </div>
-            </div>
-          ))}
+          data.children.map((item, index) => {
+            return (
+              <ChildAge
+                key={item.id}
+                index={index}
+                handleChange={handleAgeChange}
+                data={item}
+              />
+            )
+          })}
       </div>
       <hr className="h-1 bg-black/10 w-11/12 mx-auto mt-4" />
       <Button

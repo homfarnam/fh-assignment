@@ -6,13 +6,16 @@ interface HotelContextType {
   guests: number
   rooms: Room[]
   setGuests: React.Dispatch<React.SetStateAction<number>>
-  setRooms?: React.Dispatch<React.SetStateAction<Room[]>>
+  setRooms: React.Dispatch<React.SetStateAction<Room[]>>
   updateAdults: (data: Room, amountAdults: number) => void
   createRooms: (data: Room) => void
   createChildren: (data: Room, amountChildren: number) => void
   updateChildren: (data: Child, age: number) => void
   deleteRoom: (id: string) => void
   deleteChildren: (id: string) => void
+  deleteAllData: () => void
+  browserUrl: string
+  setBrowserUrl: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface HotelContextProps {
@@ -30,6 +33,9 @@ const initialState: HotelContextType = {
   updateChildren: () => {},
   deleteRoom: () => {},
   deleteChildren: () => {},
+  deleteAllData: () => {},
+  browserUrl: "",
+  setBrowserUrl: () => {},
 }
 
 export const HotelContext = createContext<HotelContextType>(initialState)
@@ -37,6 +43,7 @@ export const HotelContext = createContext<HotelContextType>(initialState)
 const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
   const [guests, setGuests] = useState<number>(0)
   const [rooms, setRooms] = useState<Room[]>([])
+  const [browserUrl, setBrowserUrl] = useState("")
 
   const createRooms = (data: Room) => {
     setRooms((prev: Room[]) => [...prev, data])
@@ -111,11 +118,17 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
     setRooms((prev) => prev.filter((room) => room.id !== id))
   }
 
+  const deleteAllData = () => {
+    setRooms([])
+    setGuests(0)
+  }
+
   return (
     <HotelContext.Provider
       value={{
         setGuests,
         rooms,
+        setRooms,
         guests,
         updateAdults,
         createRooms,
@@ -123,6 +136,9 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
         updateChildren,
         deleteRoom,
         deleteChildren,
+        deleteAllData,
+        browserUrl,
+        setBrowserUrl,
       }}
     >
       {children}

@@ -9,4 +9,6 @@ interface Room {
   children?: Child[]
 }
 
-export { Child, Room }
+type CalcType = "Plus" | "Minus"
+
+export { Child, Room, CalcType }

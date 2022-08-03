@@ -5,6 +5,8 @@ import CreateRoom from "./CreateRoom/CreateRoom"
 import Button from "./Shared/Button/Button"
 import ButtonSpinner from "./Shared/ButtonSpinner/ButtonSpinner"
 import AgePicker from "./AgePicker/AgePicker"
+import AdultChange from "./AdultChange/AdultChange"
+import ChildrenChange from "./ChildrenChange/ChildrenChange"
 
 export {
   SearchHotel,
@@ -14,4 +16,6 @@ export {
   Button,
   ButtonSpinner,
   AgePicker,
+  AdultChange,
+  ChildrenChange,
 }

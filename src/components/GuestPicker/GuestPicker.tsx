@@ -1,28 +1,10 @@
-import styled from "@emotion/styled"
 import { HotelContext } from "context/Provider"
 import { useContext } from "react"
 import { ReactComponent as Close } from "../../assets/close.svg"
 import CreateRoom from "components/CreateRoom/CreateRoom"
 import { Button } from "components"
 import { SearchButton } from "components/SearchHotel/SearchHotel.styles"
-
-const GuestPickerContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  position: absolute;
-  background-color: white;
-  top: 0;
-  overflow: auto;
-  padding: 0.5rem;
-  h3 {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-  }
-`
+import { GuestPickerContainer } from "./GuestPicker.styles"
 
 interface GuestPickerProps {
   handleOpen: () => void

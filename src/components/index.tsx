@@ -4,5 +4,14 @@ import GuestPicker from "./GuestPicker/GuestPicker"
 import CreateRoom from "./CreateRoom/CreateRoom"
 import Button from "./Shared/Button/Button"
 import ButtonSpinner from "./Shared/ButtonSpinner/ButtonSpinner"
+import ChildAge from "./ChildAge/ChildAge"
 
-export { SearchHotel, Input, GuestPicker, CreateRoom, Button, ButtonSpinner }
+export {
+  SearchHotel,
+  Input,
+  GuestPicker,
+  CreateRoom,
+  Button,
+  ButtonSpinner,
+  ChildAge,
+}

@@ -1,5 +1,5 @@
 import Input from "components/Shared/Input/Input"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ReactComponent as Location } from "../../assets/location.svg"
 import { ReactComponent as Where } from "../../assets/where.svg"
 import { ReactComponent as Guests } from "../../assets/people-numbers.svg"
@@ -11,14 +11,30 @@ import {
   SearchButton,
   searchInput,
 } from "./SearchHotel.styles"
+import GuestPicker from "components/GuestPicker/GuestPicker"
+import { HotelContext } from "context/Provider"
+import { v4 as uuidv4 } from "uuid"
 
 const SearchHotel = () => {
-  const [searchCity, setSearchCity] = useState("")
-
+  const [searchCity, setSearchCity] = useState<string>("")
   const [startDate, setStartDate] = useState<Date>()
   const [endDate, setEndDate] = useState<Date>()
-
+  const [openPicker, setOpenPicker] = useState<boolean>(false)
   const [numberOfGuests, setNumberOfGuests] = useState("2")
+
+  const { setGuests, createRooms } = useContext(HotelContext)
+
+  const handleOpenPicker = () => {
+    setOpenPicker((prev) => !prev)
+
+    createRooms({ id: uuidv4(), adults: +numberOfGuests })
+  }
+
+  const handleGuests = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumberOfGuests(e.target.value)
+    setGuests(+e.target.value)
+  }
+
   return (
     <Form className="">
       <div className="w-full relative flex items-center">
@@ -64,14 +80,17 @@ const SearchHotel = () => {
             firstIcon={<Guests className="z-99 w-5 h-5 absolute left-1" />}
             className={NumberOfGuests}
             value={numberOfGuests}
-            onChange={(e) => setNumberOfGuests(e.target.value)}
+            onChange={handleGuests}
             min={0}
           />
         </div>
       </div>
       <div className="w-full mt-3">
-        <button className={SearchButton}>Search</button>
+        <button className={SearchButton} onClick={handleOpenPicker}>
+          Search
+        </button>
       </div>
+      {openPicker && <GuestPicker handleOpen={handleOpenPicker} />}
     </Form>
   )
 }

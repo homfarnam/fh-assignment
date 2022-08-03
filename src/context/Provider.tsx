@@ -34,12 +34,9 @@ const initialState: HotelContextType = {
 
 export const HotelContext = createContext<HotelContextType>(initialState)
 
-// Create a context provider component that wraps your app and provides the context
-
 const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
   const [guests, setGuests] = useState<number>(0)
   const [rooms, setRooms] = useState<Room[]>([])
-  const [childrenInRoom, setChildrenInRoom] = useState<number>(0)
 
   const createRooms = (data: Room) => {
     setRooms((prev: Room[]) => [...prev, data])

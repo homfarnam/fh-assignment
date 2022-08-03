@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import DatePicker from "react-datepicker"
 import { v4 as uuidv4 } from "uuid"
 import Input from "components/Shared/Input/Input"
@@ -8,27 +8,43 @@ import { ReactComponent as Guests } from "../../assets/people-numbers.svg"
 import {
   DatePickers,
   Form,
-  NumberOfGuests,
+  NumberOfGuestsStyle,
   SearchButton,
   searchInput,
 } from "./SearchHotel.styles"
 import GuestPicker from "components/GuestPicker/GuestPicker"
 import { HotelContext } from "context/Provider"
 import { Button } from "components"
+import { CloseButtonType } from "types/types"
+import { calcTotal } from "lib/lib"
 
 const SearchHotel = () => {
   const [searchCity, setSearchCity] = useState<string>("")
   const [startDate, setStartDate] = useState<Date>()
   const [endDate, setEndDate] = useState<Date>()
   const [openPicker, setOpenPicker] = useState<boolean>(false)
-  const [numberOfGuests, setNumberOfGuests] = useState("2")
 
-  const { setGuests, createRooms } = useContext(HotelContext)
+  const { setGuests, createRooms, deleteAllData, rooms } =
+    useContext(HotelContext)
 
-  const handleOpenPicker = () => {
-    setOpenPicker((prev) => !prev)
+  const [numberOfGuests, setNumberOfGuests] = useState<string>("2")
 
-    createRooms({ id: uuidv4(), adults: +numberOfGuests })
+  useEffect(() => {
+    const sum = calcTotal(rooms)
+
+    setGuests(sum)
+  }, [rooms, setGuests])
+
+  const handleOpenPicker = (type: CloseButtonType) => {
+    if (type === "Open") {
+      setOpenPicker(true)
+      if (rooms.length === 0) {
+        createRooms({ id: uuidv4(), adults: +numberOfGuests })
+      }
+    } else {
+      setOpenPicker(false)
+      deleteAllData()
+    }
   }
 
   const handleGuests = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,10 +93,12 @@ const SearchHotel = () => {
 
         <div className="relative flex items-center w-auto">
           <Input
+            name="guests"
             type="number"
             firstIcon={<Guests className="z-99 w-5 h-5 absolute left-1" />}
-            className={NumberOfGuests}
+            className={NumberOfGuestsStyle}
             value={numberOfGuests}
+            defaultValue={numberOfGuests}
             onChange={handleGuests}
             min={0}
           />
@@ -91,7 +109,7 @@ const SearchHotel = () => {
           type="button"
           variant="primary"
           className={SearchButton}
-          onClick={handleOpenPicker}
+          onClick={() => handleOpenPicker("Open")}
         >
           Search
         </Button>

@@ -50,7 +50,7 @@ const DatePickers = css`
   }
 `
 
-const NumberOfGuests = css`
+const NumberOfGuestsStyle = css`
   width: 60px;
   height: 40px;
   border: 1px solid rgb(209 213 219);
@@ -79,4 +79,4 @@ const SearchButton = css`
   }
 `
 
-export { Form, searchInput, DatePickers, NumberOfGuests, SearchButton }
+export { Form, searchInput, DatePickers, NumberOfGuestsStyle, SearchButton }

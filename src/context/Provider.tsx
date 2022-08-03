@@ -11,6 +11,7 @@ interface HotelContextType {
   createRooms: (data: Room) => void
   createChildren: (data: Room, amountChildren: number) => void
   updateChildren: (count: number, type?: "Plus" | "Minus") => void
+  deleteRoom: (id: string) => void
 }
 
 interface HotelContextProps {
@@ -26,6 +27,7 @@ const initialState: HotelContextType = {
   createRooms: () => {},
   createChildren: () => {},
   updateChildren: () => {},
+  deleteRoom: () => {},
 }
 
 export const HotelContext = createContext<HotelContextType>(initialState)
@@ -92,8 +94,8 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
     }
   }
 
-  const clearRooms = () => {
-    setRooms([])
+  const deleteRoom = (id: string) => {
+    setRooms((prev) => prev.filter((room) => room.id !== id))
   }
 
   return (
@@ -106,6 +108,7 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
         createRooms,
         createChildren,
         updateChildren,
+        deleteRoom,
       }}
     >
       {children}

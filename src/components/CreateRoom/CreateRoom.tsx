@@ -30,7 +30,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     data.children?.length ?? 0
   )
 
-  const { createChildren, updateAdults, rooms, createRooms } =
+  const { createChildren, updateAdults, rooms, createRooms, deleteRoom } =
     useContext(HotelContext)
 
   const handleAdults = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +93,15 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
 
   return (
     <div className="p-3 text-black">
-      <span>Room {currentRoom + 1}</span>
+      <div className="flex items-center justify-between">
+        <span>Room {currentRoom + 1}</span>
+        <span
+          className="text-red-500 cursor-pointer"
+          onClick={() => deleteRoom(data.id)}
+        >
+          Remove Room
+        </span>
+      </div>
 
       <div className="mt-5 w-full flex items-center justify-between">
         <label htmlFor="adults" className="font-medium">

@@ -1,11 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import type { Child, Room } from "types/types"
 import { ReactComponent as Plus } from "../../assets/plus.svg"
 import { ReactComponent as Minus } from "../../assets/minus.svg"
 import { HotelContext } from "context/Provider"
-import { Button } from "components"
+import { Button, ChildAge } from "components"
 import { css } from "@emotion/css"
-import ChildAge from "components/ChildAge/ChildAge"
 import { v4 as uuidv4 } from "uuid"
 
 interface CreateRoomProps {
@@ -30,8 +29,14 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     data.children?.length ?? 0
   )
 
-  const { createChildren, updateAdults, rooms, createRooms, deleteRoom } =
-    useContext(HotelContext)
+  const {
+    createChildren,
+    updateAdults,
+    rooms,
+    createRooms,
+    deleteRoom,
+    deleteChildren,
+  } = useContext(HotelContext)
 
   const handleAdults = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdultsInRoom(+e.target.value)
@@ -89,6 +94,11 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
         children: [],
       })
     }
+  }
+
+  const handleDeleteChild = (id: string) => {
+    deleteChildren(id)
+    setChildrenInRoom((prev) => prev - 1)
   }
 
   return (
@@ -159,6 +169,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
                 index={index}
                 onAgeChange={handleAgeChange}
                 data={item}
+                onDelete={handleDeleteChild}
               />
             )
           })}

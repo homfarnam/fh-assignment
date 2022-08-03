@@ -14,7 +14,7 @@ const ChildAge: React.FC<ChildAgeProps> = ({
   onDelete,
   data,
 }) => {
-  const [age, setAge] = useState<number>(0)
+  const [age, setAge] = useState<number>(8)
 
   const handleChangeAge = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onAgeChange(+event.target.value, data)

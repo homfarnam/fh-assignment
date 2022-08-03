@@ -32,6 +32,7 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
   const {
     createChildren,
     updateAdults,
+    updateChildren,
     rooms,
     createRooms,
     deleteRoom,
@@ -77,12 +78,8 @@ const CreateRoom: React.FC<CreateRoomProps> = ({ data, currentRoom }) => {
     createChildren(data, condition)
   }
 
-  // const handleChildrenCalculate = (type: "Plus" | "Minus") => {
-  //   updateChildern(childrenInRoom, type)
-  // }
-
   const handleAgeChange = (age: number, data: Child) => {
-    console.log("age change", { data, age })
+    updateChildren(data, age)
   }
 
   // function to create new room with default values

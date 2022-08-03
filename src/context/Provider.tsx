@@ -10,7 +10,7 @@ interface HotelContextType {
   updateAdults: (data: Room, amountAdults: number) => void
   createRooms: (data: Room) => void
   createChildren: (data: Room, amountChildren: number) => void
-  updateChildren: (count: number, type?: "Plus" | "Minus") => void
+  updateChildren: (data: Child, age: number) => void
   deleteRoom: (id: string) => void
   deleteChildren: (id: string) => void
 }
@@ -65,8 +65,6 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
       return
     }
 
-    console.log({ data, amountChildren })
-
     const allChildren = Array.from({ length: amountChildren }, () => ({
       age: 8,
       id: uuidv4(),
@@ -84,22 +82,6 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
     })
   }
 
-  const updateChildren = (count: number, type?: "Plus" | "Minus") => {
-    if (type === "Minus") {
-      const newAd = childrenInRoom === 0 ? childrenInRoom : childrenInRoom - 1
-      setChildrenInRoom(newAd)
-    } else if (type === "Plus") {
-      const newAd = childrenInRoom === 3 ? childrenInRoom : childrenInRoom + 1
-      setChildrenInRoom(newAd)
-    } else {
-      setChildrenInRoom(count)
-    }
-  }
-
-  const deleteRoom = (id: string) => {
-    setRooms((prev) => prev.filter((room) => room.id !== id))
-  }
-
   const deleteChildren = (id: string) => {
     if (!id) return
 
@@ -111,6 +93,25 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
         }
       })
     )
+  }
+
+  const updateChildren = (data: Child, age: number) => {
+    if (!data) return
+
+    setRooms((prev) =>
+      prev.map((room) => {
+        return {
+          ...room,
+          children: room.children?.map((child) =>
+            child.id === data.id ? { ...child, age } : child
+          ),
+        }
+      })
+    )
+  }
+
+  const deleteRoom = (id: string) => {
+    setRooms((prev) => prev.filter((room) => room.id !== id))
   }
 
   return (

@@ -27,7 +27,8 @@ const Input: React.FC<InputProps> = ({
         type={type}
         placeholder={placeholder}
         className={className}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
+        value={value}
         {...props}
       />
       {secondIcon}

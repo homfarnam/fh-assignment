@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react"
-import { v4 as uuidv4 } from "uuid"
 import { ReactComponent as Logo } from "./assets/top-logo.svg"
 import mainscene from "./assets/main-scene.png"
 import brands from "./assets/brands.png"

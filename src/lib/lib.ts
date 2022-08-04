@@ -18,4 +18,13 @@ const checkRoomSize = (room: Room): number => {
   return room.adults + (room.children?.length ?? 0)
 }
 
-export { calcAdults, calcChildren, calcTotal, checkRoomSize }
+const getUrlParamData = (name: string): string => {
+  const url = window.location.href
+  const urlParams = new URL(url)
+
+  const data = urlParams.searchParams.get(name) as string
+
+  return data
+}
+
+export { calcAdults, calcChildren, calcTotal, checkRoomSize, getUrlParamData }

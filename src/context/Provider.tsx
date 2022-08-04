@@ -71,17 +71,27 @@ const HotelProvider: React.FC<HotelContextProps> = ({ children }) => {
       return
     }
 
-    const allChildren = Array.from({ length: amountChildren }, () => ({
-      age: 8,
-      id: uuidv4(),
-    }))
+    const newChild = [
+      {
+        age: 8,
+        id: uuidv4(),
+      },
+    ]
 
-    setRooms((prev) => {
+    setRooms((prev: Room[]) => {
       return prev.map((room) =>
         data.id === room.id
           ? {
               ...room,
-              children: allChildren,
+              children: room.children
+                ? [
+                    ...room.children,
+                    {
+                      age: 8,
+                      id: uuidv4(),
+                    },
+                  ]
+                : newChild,
             }
           : room
       )

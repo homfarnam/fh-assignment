@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Child } from "types/types"
 import { ReactComponent as Remove } from "../../assets/close-red.svg"
 
@@ -25,6 +25,12 @@ const AgePicker: React.FC<AgePickerProps> = ({
     onAgeChange(+event.target.value, childData)
     setAge(+event.target.value)
   }
+
+  useEffect(() => {
+    if (childData) {
+      setAge(childData.age)
+    }
+  }, [childData])
 
   const allOptions = Array.from({ length: 18 }, (_, index) => index + 1)
 

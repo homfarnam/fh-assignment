@@ -1,4 +1,5 @@
 import type { Room } from "types/types"
+import { v4 as uuidv4 } from "uuid"
 
 const calcAdults = (rooms: Room[]): number =>
   rooms.reduce((acc, curr) => {
@@ -27,4 +28,36 @@ const getUrlParamData = (name: string): string => {
   return data
 }
 
-export { calcAdults, calcChildren, calcTotal, checkRoomSize, getUrlParamData }
+const decodeRooms = (rooms: string) => {
+  const roomsArray = rooms?.split("|")
+  const roomsDecoded = roomsArray?.map((room, i) => {
+    const roomArray = room.split(":")
+
+    const adults = +roomArray?.[0]
+
+    const children = roomArray?.[1]
+
+    const childrenArray = children?.split(",")
+
+    const childrenDecoded = childrenArray?.map((child) => ({
+      id: uuidv4(),
+      age: parseInt(child),
+    }))
+
+    return {
+      id: uuidv4(),
+      adults,
+      children: childrenDecoded,
+    }
+  })
+  return roomsDecoded
+}
+
+export {
+  calcAdults,
+  calcChildren,
+  calcTotal,
+  checkRoomSize,
+  getUrlParamData,
+  decodeRooms,
+}

@@ -16,7 +16,7 @@ import GuestPicker from "components/GuestPicker/GuestPicker"
 import { HotelContext } from "context/Provider"
 import { Button } from "components"
 import { CloseButtonType } from "types/types"
-import { calcTotal } from "lib/lib"
+import { calcTotal, getUrlParamData } from "lib/lib"
 
 const SearchHotel = () => {
   const [searchCity, setSearchCity] = useState<string>("")
@@ -33,13 +33,40 @@ const SearchHotel = () => {
     const sum = calcTotal(rooms)
 
     setGuests(sum)
+    setNumberOfGuests(sum.toString())
   }, [rooms, setGuests])
+
+  useEffect(() => {
+    const loc = getUrlParamData("location")
+    const checkIn = getUrlParamData("checkIn")
+    const checkOut = getUrlParamData("checkOut")
+
+    if (loc) {
+      setSearchCity(loc)
+    }
+    if (checkIn) {
+      setStartDate(new Date(checkIn))
+    }
+    if (checkOut) {
+      setEndDate(new Date(checkOut))
+    }
+  }, [])
 
   const handleOpenPicker = (type: CloseButtonType) => {
     if (type === "Open") {
       setOpenPicker(true)
       if (rooms.length === 0) {
         createRooms({ id: uuidv4(), adults: +numberOfGuests })
+
+        const checkIn = startDate?.toISOString()
+        const checkOut = endDate?.toISOString()
+
+        const url = new URL(window.location.href)
+        url.searchParams.set("location", searchCity)
+        url.searchParams.set("checkIn", checkIn!!)
+        url.searchParams.set("checkOut", checkOut!!)
+
+        window.history.pushState({}, "", url.href)
       }
     } else {
       setOpenPicker(false)
@@ -62,7 +89,9 @@ const SearchHotel = () => {
           secondIcon={<Where className="z-99 w-5 h-5 right-3 absolute" />}
           className={searchInput}
           value={searchCity}
-          onChange={(e) => setSearchCity(e.target.value)}
+          onChange={(e) => {
+            setSearchCity(e.target.value)
+          }}
         />
       </div>
       <div className={DatePickers}>
@@ -70,7 +99,9 @@ const SearchHotel = () => {
           <DatePicker
             className="border-2 border-gray-300 rounded-lg p-2 text-black text-sm"
             selected={startDate}
-            onChange={(date) => setStartDate(date as Date)}
+            onChange={(date) => {
+              setStartDate(date as Date)
+            }}
             selectsStart
             startDate={startDate}
             placeholderText="Check in"
@@ -82,7 +113,9 @@ const SearchHotel = () => {
           <DatePicker
             className="border-2 border-gray-300 rounded-lg p-2 text-black text-sm"
             selected={endDate}
-            onChange={(date) => setEndDate(date as Date)}
+            onChange={(date) => {
+              setEndDate(date as Date)
+            }}
             selectsEnd
             placeholderText="Check out"
             startDate={startDate}
@@ -98,7 +131,6 @@ const SearchHotel = () => {
             firstIcon={<Guests className="z-99 w-5 h-5 absolute left-1" />}
             className={NumberOfGuestsStyle}
             value={numberOfGuests}
-            defaultValue={numberOfGuests}
             onChange={handleGuests}
             min={0}
           />

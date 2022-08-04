@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react"
-import { v4 as uuidv4 } from "uuid"
 import type { CalcType, Child, Room } from "types/types"
 import { HotelContext } from "context/Provider"
 import { Button, AgePicker, AdultChange, ChildrenChange } from "components"

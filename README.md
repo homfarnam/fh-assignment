@@ -1,22 +1,56 @@
-# cra-template-tailwindcss-typescript
+# Find Hotel Frontend assignment
 
-A streamlined [Tailwind CSS v3.1](https://tailwindcss.com) template for [Create React App](https://github.com/facebook/create-react-app) in [TypeScript](https://www.typescriptlang.org/).
+It's a project that brings you a form to search for hotels and choose check-in, check-out dates and guest numbers with ability of adding rooms, adults and children with their ages.
 
-> This template installs and sets up [Tailwind CSS](https://tailwindcss.com) with TypeScript support.
 
-## Usage
+## 💻 Getting started in Developer mode
+
+First, install the dependencies:
 
 ```bash
-npx create-react-app --template tailwindcss-typescript
+npm run install
+# or
+yarn install
 ```
 
-## Credits
+For test the project you can use:
+```bash
+npm run test
+# or
+yarn test
+```
 
-This project was made possible thanks to the following projects.
 
-1. [GeoffSelby/cra-template-tailwindcss](https://github.com/GeoffSelby/cra-template-tailwindcss) - A streamlined Tailwind CSS template for Create React App (in JavaScript).
-2. [cra-template-typescript](https://github.com/facebook/create-react-app/tree/master/packages/cra-template-typescript) - An official TypeScript template for create-react-app.
+## 🌐  Launch the Project locally
 
-## License
+For building the project and start it on your local machine use:
 
-MIT © [Sung M. Kim](https://sung.codes)
+```bash
+npm run build
+npm run start
+# or
+yarn build
+yarn start
+```
+
+
+## 🧰 Libraries and tools
+
+- ✅ Programming Language: **JavaScript**
+- ✅ Typecheck: **Typescript**
+- ✅ Dom Manipulation: **React**
+- ✅ State manager: **React Context**
+- ✅ Css Library: **[Emotion Css](https://emotion.sh/)** , **[Tailwind Css](https://tailwindcss.com/)**
+- ✅ Code Quality: ** Prettier**
+
+
+## Types and Interfaces
+
+#### Global
+
+- Global Types are located in `types.d.ts` at "src/types".
+
+
+## RoadAhead
+
+If it was a real task and project, I could create a Docker file and some tests like react testing library or cypress for that.
